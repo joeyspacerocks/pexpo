@@ -2,10 +2,14 @@
 
 import os
 import sys
-import StringIO
 import argparse
 from PIL import Image
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+    
 def is_clear(p):
 	return p[0] + p[1] + p[2] + p[3] == 0
 
@@ -39,7 +43,7 @@ def process_png(path, filename, dest, border):
 	cropped = img.crop((left, top, right + 1, bot + 1))
 	cropped.save(os.path.join(dest, filename), 'png')
 
-	print "{0}: ({1},{2}) -> ({3},{4})".format(filename, left, top, right, bot)
+	print("{0}: ({1},{2}) -> ({3},{4})".format(filename, left, top, right, bot))
 	
 	return {'left': left, 'top': top, 'right': right, 'bottom': bot }
 
